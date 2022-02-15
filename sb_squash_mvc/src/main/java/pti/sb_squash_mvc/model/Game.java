@@ -5,14 +5,23 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 
 @Entity
 @Table (name = "games")
 public class Game {
 	
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private int id;
 	
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "name")
@@ -41,6 +50,16 @@ public class Game {
 	
 	
 	
+	
+	
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public Player getPlayer1() {
 		return player1;
@@ -102,10 +121,12 @@ public class Game {
 
 	@Override
 	public String toString() {
-		return "Game [player1=" + player1 + ", player2=" + player2 + ", place=" + place + ", date=" + date
-				+ ", player1_score=" + player1_score + ", player2_score=" + player2_score + ", winner=" + winner + "]";
+		return "Game [id=" + id + ", player1=" + player1 + ", player2=" + player2 + ", place=" + place + ", date="
+				+ date + ", player1_score=" + player1_score + ", player2_score=" + player2_score + ", winner=" + winner
+				+ "]";
 	}
 
+	
 	
 	
 	

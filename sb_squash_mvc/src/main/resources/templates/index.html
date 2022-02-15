@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>index</title>
+</head>
+<body>
+
+	<p>Squash game competition site</p>
+	
+	</br>
+	
+	<p> Please sign in </p>
+	
+	</br>
+	
+    <form action="/login" method="post">
+        <input type="text" name="name" placeholder="Name" />
+        <input type="password" name="password" />
+        <input type="submit" />
+    </form>
+    
+    <p th:text="${logerror}"></p>
+
+</body>
+</html>

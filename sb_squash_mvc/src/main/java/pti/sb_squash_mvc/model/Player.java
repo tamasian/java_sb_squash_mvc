@@ -23,6 +23,16 @@ public class Player {
 	private boolean changePassword;
 	
 	
+	
+	
+	public Player(String name, String password) {
+		super();
+		this.name = name;
+		this.password = password;
+		this.type = Player_type.USER;
+		this.changePassword = true;
+				
+	}
 
 	public String getName() {
 		return name;

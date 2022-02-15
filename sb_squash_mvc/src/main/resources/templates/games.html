@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Game list</title>
+</head>
+<body>
+
+	<table>
+    <tr>
+        <th>Game id</th>
+        <th>Game's date</th>
+        <th>Place's name</th>
+        <th>Place's address</th>
+        <th>Place's rental fee HUF</th>
+        <th>Place's rental fee EUR</th>
+        <th>Player1's name</th>
+        <th>Player2's name</th>       
+        <th>Player1's score</th>
+        <th>Player2's score</th>
+        <th>Winner's name</th>
+        
+    </tr>
+    <tr th:each="game : ${gameList}">
+    	<td th:number="${game.id}"></td>
+        <td th:text="${game.date}"></td> - formázás!
+        ...
+    </tr>
+	</table>
+
+</body>
+</html>
