@@ -6,6 +6,34 @@
 </head>
 <body>
 
+
+	<p>Search by player </p>
+	
+	<form action="/searchbyplayer" method="get">
+		<select name="PlayerName">
+			<option value=""></option>
+			<option th:each="player : ${players}" th:text="${player}" /></option>
+		</select>	
+	</form>
+	
+	</br>
+	</br>
+	
+	
+	<p>Search by place </p>
+	
+	<form action="/searchbyplace" method="get">
+		<select name="PlaceName">
+			<option value=""></option>
+			<option th:each="place : ${places}" th:text="${place}" /></option>
+		</select>	
+	</form>
+	
+	</br>
+	</br>
+
+
+
 	<table>
     <tr>
         <th>Game id</th>

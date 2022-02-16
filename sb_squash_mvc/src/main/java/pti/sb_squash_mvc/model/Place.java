@@ -18,9 +18,10 @@ public class Place {
 	private String address;
 	
 	@Column(name = "rental_fee_HUF_hour")
-	private double rental_fee;
+	private double rental_fee_HUF;
 	
 	
+	private double rental_fee_EUR;
 	
 	
 
@@ -40,22 +41,27 @@ public class Place {
 		this.address = address;
 	}
 
-	public double getRental_fee() {
-		return rental_fee;
+	public double getRental_fee_HUF() {
+		return rental_fee_HUF;
 	}
 
-	public void setRental_fee(double rental_fee) {
-		this.rental_fee = rental_fee;
+	public void setRental_fee_HUF(double rental_fee_HUF) {
+		this.rental_fee_HUF = rental_fee_HUF;
+	}
+
+	public double getRental_fee_EUR() {
+		return rental_fee_EUR;
+	}
+
+	public void setRental_fee_EUR(double rental_fee_EUR) {
+		this.rental_fee_EUR = rental_fee_EUR;
 	}
 
 	@Override
 	public String toString() {
-		return "Place [name=" + name + ", address=" + address + ", rental_fee=" + rental_fee + "]";
+		return "Place [name=" + name + ", address=" + address + ", rental_fee_HUF=" + rental_fee_HUF
+				+ ", rental_fee_EUR=" + rental_fee_EUR + "]";
 	}
-	
-	
-	
-	
-	
 
+	
 }

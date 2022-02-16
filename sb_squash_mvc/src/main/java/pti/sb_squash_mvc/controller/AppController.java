@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import pti.sb_squash_mvc.db.Database;
 import pti.sb_squash_mvc.model.Game;
+import pti.sb_squash_mvc.model.Place;
 import pti.sb_squash_mvc.model.Player;
 import pti.sb_squash_mvc.model.Player_type;
 
@@ -17,7 +18,7 @@ import pti.sb_squash_mvc.model.Player_type;
 public class AppController {
 	
 	
-	private Player currentPlayer;
+	private Player loggedPlayer;
 	
 	
 	@GetMapping("/")
@@ -43,7 +44,7 @@ public class AppController {
 
 		if(player != null) {
 			
-			this.currentPlayer = player;
+			this.loggedPlayer = player;
 			
 			if(player.getType() == Player_type.ADMIN) {
 				
@@ -88,12 +89,12 @@ public class AppController {
 		
 		if (pwd1.equals(pwd2)) {
 			
-			currentPlayer.setPassword(pwd1);
-			currentPlayer.setChangePassword(false);
+			loggedPlayer.setPassword(pwd1);
+			loggedPlayer.setChangePassword(false);
 			
 			Database db = new Database();
 			
-			db.saveNewPassword(currentPlayer);
+			db.saveNewPassword(loggedPlayer);
 			
 			db.close();
 			
@@ -119,9 +120,9 @@ public class AppController {
 	@GetMapping("/games")
 	public String getGames(Model model) {
 		
-		Database db = new Database();
+		Database dbg = new Database();
 		
-		ArrayList<Game> games = db.getGameList();
+		ArrayList<Game> games = dbg.getGameList();
 		
 		ArrayList<Game> orderedGamesList = new ArrayList<Game>();
 		
@@ -151,10 +152,226 @@ public class AppController {
 			}
 			
 			
+			
 		model.addAttribute("gameList", orderedGamesList);
+			
+		dbg.close();
+		
+		
+		
+		Database dbp = new Database();
+		
+		ArrayList<Player> players = dbp.getPlayerList();
+		
+		dbp.close();
+
+		model.addAttribute("players", players);
+		
+		
+		
+		Database dbl = new Database();
+		
+		ArrayList<Place> places = dbl.getPlaceList();
+		
+		dbp.close();
+		
+		model.addAttribute("places", places);
+		
+			
 		
 		return "games.html";
 	}
 	
-
+	
+	@GetMapping("/searchbyplayer")
+	public String searchPlayer(Model model,
+			@RequestParam(name="PlayerName") String name			
+			) 
+	{
+		
+		Database dbg = new Database();
+		
+		ArrayList<Game> games = dbg.getGameList();
+		
+		ArrayList<Game> orderedGamesList = new ArrayList<Game>();
+		
+		
+		int origSize = games.size();
+		Game game = null;
+		
+		
+		for(int l = 0; l < origSize; l++) {
+			
+			game = games.get(0);
+			
+			for(int m = 1; m < games.size(); m++) {
+				
+				Game cG = games.get(m);
+								
+					if( cG.getDate().after(game.getDate()) ) {
+					
+						game = cG;
+					
+					}
+					
+				}
+				
+			orderedGamesList.add(game);
+			games.remove(game);			
+			}
+			
+			
+		dbg.close();
+		
+		
+		if(name.equals("") == true) {
+			
+			model.addAttribute("gameList", orderedGamesList);
+			
+		}
+		else {
+			
+			ArrayList<Game> searchResultList = new ArrayList<Game>();
+			
+			for(int index = 0; index < orderedGamesList.size(); index++) {
+				
+				Game cGame = orderedGamesList.get(index);
+								
+						
+				if( (cGame.getPlayer1().getName().equals(name) == true) || (cGame.getPlayer2().getName().equals(name) == true) ) {
+			
+					searchResultList.add(cGame);
+				}
+			}
+			
+			model.addAttribute("gameList", searchResultList);
+			
+		}
+				
+		
+		return "games.html";
+	}
+	
+	
+	@GetMapping("/searchbyplace")
+	public String searchPlace(Model model,
+			@RequestParam(name="PlaceName") String name			
+			) 
+	{
+		
+		Database dbg = new Database();
+		
+		ArrayList<Game> games = dbg.getGameList();
+		
+		ArrayList<Game> orderedGamesList = new ArrayList<Game>();
+		
+		
+		int origSize = games.size();
+		Game game = null;
+		
+		
+		for(int l = 0; l < origSize; l++) {
+			
+			game = games.get(0);
+			
+			for(int m = 1; m < games.size(); m++) {
+				
+				Game cG = games.get(m);
+								
+					if( cG.getDate().after(game.getDate()) ) {
+					
+						game = cG;
+					
+					}
+					
+				}
+				
+			orderedGamesList.add(game);
+			games.remove(game);			
+			}
+			
+			
+		dbg.close();
+		
+		
+		if(name.equals("") == true) {
+			
+			model.addAttribute("gameList", orderedGamesList);
+			
+		}
+		else {
+			
+			ArrayList<Game> searchResultList = new ArrayList<Game>();
+			
+			for(int index = 0; index < orderedGamesList.size(); index++) {
+				
+				Game cGame = orderedGamesList.get(index);
+								
+						
+				if( cGame.getPlace().getName().equals(name) == true ) {
+			
+					searchResultList.add(cGame);
+				}
+			}
+			
+			model.addAttribute("gameList", searchResultList);
+			
+		}
+				
+		
+		return "games.html";
+		
+	}
+	
+	
+	@GetMapping("/admin")
+	public String authors(Model model,
+			@RequestParam(name="function") String function
+			)
+	{
+		String targetPage = "";
+		
+		//GameList
+		if (function.equals("gL") == true) {
+			
+			targetPage = getGames(model);
+			
+		}
+		//new player
+		else if (function.equals("nP") == true) {
+			
+			targetPage = "newplayer.html";
+			
+		}
+		//new place
+		else if (function.equals("nL") == true) {
+			
+			targetPage = "newplace.html";
+			
+		}
+		//new game
+		else if (function.equals("nG") == true) {
+					
+			targetPage = "newgame.html";		
+					
+		}
+		//result
+		else if (function.equals("nG") == true) {
+			
+			targetPage = "addresult.html";
+			
+		}
+		else {
+			
+			model.addAttribute("error", "No such function");
+			targetPage = "admin_index.html";
+		}
+		
+		
+		return targetPage;
+		
+	}
+	
+	
+	
 }

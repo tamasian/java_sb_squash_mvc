@@ -13,6 +13,7 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import pti.sb_squash_mvc.model.Game;
+import pti.sb_squash_mvc.model.Place;
 import pti.sb_squash_mvc.model.Player;
 
 public class Database {
@@ -85,10 +86,10 @@ private SessionFactory sessionFactory;
 		Transaction transaction = session.beginTransaction();
 		
 		
-		Query query = session.createQuery("SELECT g FROM Game u ", Game.class);
+		Query query = session.createQuery("SELECT g FROM Game g ", Game.class);
 		List<Game> gameList = query.getResultList();
 		
-		if(games.isEmpty() == false) {
+		if(gameList.isEmpty() == false) {
 			
 			for(int index = 0; index < gameList.size(); index++) {
 				
@@ -105,7 +106,60 @@ private SessionFactory sessionFactory;
 	}
 	
 	
+	public ArrayList<Player> getPlayerList(){
+		
+		ArrayList<Player> players = new ArrayList<Player>();
+		
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		
+		
+		Query query = session.createQuery("SELECT p FROM Player p ", Player.class);
+		List<Player> playerList = query.getResultList();
+		
+		if(playerList.isEmpty() == false) {
+			
+			for(int index = 0; index < playerList.size(); index++) {
+				
+				Player player = playerList.get(index);
+				players.add(player);
+			}
+			
+		}
+				
+		transaction.commit();
+		session.close();
+		
+		return players;
+	}
 	
+	
+	public ArrayList<Place> getPlaceList(){
+		
+		ArrayList<Place> places = new ArrayList<Place>();
+		
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		
+		
+		Query query = session.createQuery("SELECT p FROM Place p ", Place.class);
+		List<Place> placeList = query.getResultList();
+		
+		if(placeList.isEmpty() == false) {
+			
+			for(int index = 0; index < placeList.size(); index++) {
+				
+				Place place = placeList.get(index);
+				places.add(place);
+			}
+			
+		}
+				
+		transaction.commit();
+		session.close();
+		
+		return places;
+	}
 	
 	
 	
