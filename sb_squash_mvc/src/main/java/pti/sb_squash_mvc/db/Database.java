@@ -162,20 +162,78 @@ private SessionFactory sessionFactory;
 	}
 	
 	
+	public boolean playerExistsWithName(String name) {
+		
+		boolean playerExist = false;
+		
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		
+		
+		Query query = session.createQuery("SELECT p FROM Player p WHERE p.name = :name", Player.class);
+		query.setParameter("name", name);
+		List<Player> playerList = query.getResultList();
+		
+		if(playerList.isEmpty() == false) {
+			playerExist = true;
+		}
+		
+		transaction.commit();
+		session.close();
+		
+		return playerExist;
+	}
+	
+	public void savePlayer(Player player) {
+
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		
+		session.save(player);
+		
+		
+		transaction.commit();
+		session.close();	
+	}
+	
+	
+	public boolean placeExistsWithName(String name ) {
+		
+		boolean placeExist = false;
+		
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		
+		
+		Query query = session.createQuery("SELECT p FROM Place p WHERE p.name = :name", Place.class);
+		query.setParameter("name", name);
+		List<Place> placeList = query.getResultList();
+		
+		if(placeList.isEmpty() == false) {
+			placeExist = true;
+		}
+		
+		transaction.commit();
+		session.close();
+		
+		return placeExist;
+	}
+	
+	public void savePlace(Place place) {
+
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		
+		session.save(place);
+		
+		
+		transaction.commit();
+		session.close();	
+	}
 	
 		
 	public void close() {
 		sessionFactory.close();
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
 }

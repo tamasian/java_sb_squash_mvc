@@ -25,10 +25,10 @@ public class Player {
 	
 	
 	
-	public Player(String name, String password) {
+	public Player(String name) {
 		super();
 		this.name = name;
-		this.password = password;
+		this.password = "generált";
 		this.type = Player_type.USER;
 		this.changePassword = true;
 				

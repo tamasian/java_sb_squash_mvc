@@ -2,6 +2,7 @@ package pti.sb_squash_mvc.controller;
 
 import java.util.ArrayList;
 
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -184,7 +185,7 @@ public class AppController {
 	
 	
 	@GetMapping("/searchbyplayer")
-	public String searchPlayer(Model model,
+	public String searchByPlayer(Model model,
 			@RequestParam(name="PlayerName") String name			
 			) 
 	{
@@ -254,7 +255,7 @@ public class AppController {
 	
 	
 	@GetMapping("/searchbyplace")
-	public String searchPlace(Model model,
+	public String searchByPlace(Model model,
 			@RequestParam(name="PlaceName") String name			
 			) 
 	{
@@ -325,7 +326,7 @@ public class AppController {
 	
 	
 	@GetMapping("/admin")
-	public String authors(Model model,
+	public String adminFunctions(Model model,
 			@RequestParam(name="function") String function
 			)
 	{
@@ -372,6 +373,88 @@ public class AppController {
 		
 	}
 	
+	
+	@GetMapping("/admin/addnewplayer")
+	public String addNewPlayer(Model model,
+			@RequestParam(name="name") String name
+			)
+	{
+		String targetPage = "";
+		String regresult = "";
+		
+		Database db = new Database();
+		boolean playerExists = db.playerExistsWithName(name);
+		
+		if(playerExists == false) {
+			
+			Player player = new Player(name);
+						
+			db.savePlayer(player);
+					
+			
+			targetPage = "admin_index.html";
+			regresult = "Successful registration";
+			
+		}
+		else {
+			targetPage = "newplayer.html";
+			regresult = "Player name already exists!";
+		}
+		
+		
+		model.addAttribute("regresult", regresult);
+		db.close();
+		
+		
+		
+		return targetPage;
+		
+	}
+	
+	
+	@GetMapping("/addnewplace")
+	public String addNewPlace(Model model,
+			@RequestParam(name="name") String name,
+			@RequestParam(name="address") String address,
+			@RequestParam(name="rentalfee") double rentalfee
+			) {
+		
+		String targetPage = "";
+		String regresult = "";
+		
+		
+		Database db = new Database();
+		boolean placeExists = db.placeExistsWithName(name);
+		
+		if(placeExists == false) {
+			
+			Place place = new Place(name, address, rentalfee);
+						
+			db.savePlace(place);
+					
+			
+			targetPage = "admin_index.html";
+			regresult = "Successful registration";
+			
+			
+		}
+		else {
+			targetPage = "newplace.html";
+			regresult = "Place's name already exists!";
+		}
+		
+		
+		model.addAttribute("regresult", regresult);
+		db.close();
+		
+		
+		
+		
+		
+		
+		
+		return targetPage;
+	}
 	
 	
 }

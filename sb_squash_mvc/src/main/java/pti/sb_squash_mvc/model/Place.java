@@ -22,8 +22,15 @@ public class Place {
 	
 	
 	private double rental_fee_EUR;
+		
 	
-	
+
+	public Place(String name, String address, double rental_fee_HUF) {
+		super();
+		this.name = name;
+		this.address = address;
+		this.rental_fee_HUF = rental_fee_HUF;
+	}
 
 	public String getName() {
 		return name;

@@ -2,15 +2,22 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Main admin</title>
+<title>Admin index</title>
 </head>
 <body>
 
+
+	<p th:text="${regresult}"></p>
+
 	<form action="/admin" method="get">
 		<input type="radio" name="function" value="gL"> List of Games </input>
+		</br>
 		<input type="radio" name="function" value="nP"> Add new Player </input>
+		</br>
 		<input type="radio" name="function" value="nL"> Add new Place </input>
+		</br>
 		<input type="radio" name="function" value="nG"> Add new Game </input>
+		</br>
 		<input type="radio" name="function" value="gR"> Set result </input>
 		</br>
 		</br>

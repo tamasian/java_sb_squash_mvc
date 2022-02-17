@@ -6,5 +6,18 @@
 </head>
 <body>
 
+	<p th:text="${regresult}"></p>
+	
+	<p>Registration Form</p>
+    <form action="/addnewplace" method="get">
+        <input type="text" name="name" placeholder="Place's name" />
+        </br>
+        <input type="text" name="address" placeholder="Place's address" />
+        </br>
+        <input type="number" name="rentalfee" placeholder="Place's rental fee per hour in HUF" />
+        </br>        
+        <input type="submit" />
+    </form>
+
 </body>
 </html>

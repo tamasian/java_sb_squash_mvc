@@ -2,6 +2,7 @@ package pti.sb_squash_mvc.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -23,15 +25,15 @@ public class Game {
 	@Column(name = "id")
 	private int id;
 	
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "name")
 	private Player player1;
 	
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "name")
 	private Player player2;
 	
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "name")
 	private Place place;
 	
@@ -41,10 +43,10 @@ public class Game {
 	@Column(name = "player1_score")
 	private int player1_score;
 	
-	@Column(name = "date")
+	@Column(name = "player2_score")
 	private int player2_score;
 	
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "name")
 	private Player winner;
 	
@@ -52,6 +54,14 @@ public class Game {
 	
 	
 	
+
+	public Game(Player player1, Player player2, Place place, Date date) {
+		super();
+		this.player1 = player1;
+		this.player2 = player2;
+		this.place = place;
+		this.date = date;
+	}
 
 	public int getId() {
 		return id;
@@ -76,8 +86,6 @@ public class Game {
 	public void setPlayer2(Player player2) {
 		this.player2 = player2;
 	}
-
-	
 
 	public Place getPlace() {
 		return place;
@@ -125,8 +133,6 @@ public class Game {
 				+ date + ", player1_score=" + player1_score + ", player2_score=" + player2_score + ", winner=" + winner
 				+ "]";
 	}
-
-	
 	
 	
 	
