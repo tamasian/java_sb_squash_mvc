@@ -2,6 +2,8 @@ package pti.sb_squash_mvc.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -16,8 +18,9 @@ public class Player {
 	@Column(name = "password")
 	private String password;
 	
+	@Enumerated(EnumType.STRING)
 	@Column(name = "type")
-	private Enum<Player_type> type;
+	private Player_type type;
 	
 	@Column(name = "change_password")
 	private boolean changePassword;
@@ -25,12 +28,16 @@ public class Player {
 	
 	
 	
+	public Player() {
+		super();
+	}
+
 	public Player(String name) {
 		super();
 		this.name = name;
 		this.password = "generált";
 		this.type = Player_type.USER;
-		this.changePassword = true;
+		
 				
 	}
 
@@ -51,11 +58,13 @@ public class Player {
 	}
 
 	
-	public Enum<Player_type> getType() {
+	
+
+	public Player_type getType() {
 		return type;
 	}
 
-	public void setType(Enum<Player_type> type) {
+	public void setType(Player_type type) {
 		this.type = type;
 	}
 
@@ -66,6 +75,10 @@ public class Player {
 	public void setChangePassword(boolean changePassword) {
 		this.changePassword = changePassword;
 	}
+
+	
+
+	
 	
 	
 		

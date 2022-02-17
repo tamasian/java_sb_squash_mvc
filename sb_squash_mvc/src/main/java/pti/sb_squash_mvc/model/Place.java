@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
 
 @Entity
 @Table(name = "places")
@@ -20,7 +22,7 @@ public class Place {
 	@Column(name = "rental_fee_HUF_hour")
 	private double rental_fee_HUF;
 	
-	
+	@Transient
 	private double rental_fee_EUR;
 		
 	

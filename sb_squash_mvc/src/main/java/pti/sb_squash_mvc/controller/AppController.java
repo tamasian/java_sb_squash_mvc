@@ -78,7 +78,7 @@ public class AppController {
 	}
 	
 	
-	@PostMapping("/newpwd")
+	@PostMapping("/savepwd")
 	public String saveNewPassword(Model model,
 				@RequestParam(name = "password1") String pwd1,
 				@RequestParam(name = "password2") String pwd2
@@ -87,32 +87,33 @@ public class AppController {
 	{
 		
 		String targetPage = "";
+		String success = "";
 		
 		if (pwd1.equals(pwd2)) {
 			
 			loggedPlayer.setPassword(pwd1);
 			loggedPlayer.setChangePassword(false);
 			
+			
 			Database db = new Database();
 			
 			db.saveNewPassword(loggedPlayer);
 			
+			
 			db.close();
 			
-			
-			model.addAttribute("success", "Password has changed succesfully");
-			
+			success = "Password has changed succesfully";
 			targetPage = "games.html"; 
 			
 		}
 		
 		else {
 			
-			model.addAttribute("error", "The passwords are different");
+			success ="The passwords are different";
 			targetPage = "newpwd.html"; 
 		}
 				
-		
+		model.addAttribute("pwchangeresult", success);
 		return targetPage;
 	
 	}
@@ -357,7 +358,7 @@ public class AppController {
 					
 		}
 		//result
-		else if (function.equals("nG") == true) {
+		else if (function.equals("nR") == true) {
 			
 			targetPage = "addresult.html";
 			

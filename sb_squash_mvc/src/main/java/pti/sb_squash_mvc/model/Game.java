@@ -26,15 +26,15 @@ public class Game {
 	private int id;
 	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "name")
+	@JoinColumn(name = "player1")
 	private Player player1;
 	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "name")
+	@JoinColumn(name = "player2")
 	private Player player2;
 	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "name")
+	@JoinColumn(name = "place")
 	private Place place;
 	
 	@Column(name = "date")
@@ -47,7 +47,7 @@ public class Game {
 	private int player2_score;
 	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "name")
+	@JoinColumn(name = "winner")
 	private Player winner;
 	
 	

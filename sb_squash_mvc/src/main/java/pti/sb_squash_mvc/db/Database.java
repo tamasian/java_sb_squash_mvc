@@ -39,7 +39,7 @@ private SessionFactory sessionFactory;
 		Transaction transaction = session.beginTransaction();
 		
 		
-		Query query = session.createQuery("SELECT u FROM Player u WHERE u.name = :name AND u.password = :password", Player.class);
+		Query query = session.createQuery("SELECT p FROM Player p WHERE p.name = :name AND p.password = :password", Player.class);
 		query.setParameter("name", name);
 		query.setParameter("password", password);
 		List<Player> players = query.getResultList();
@@ -59,16 +59,16 @@ private SessionFactory sessionFactory;
 	
 	public boolean saveNewPassword(Player player) {
 		
-		boolean success = false;
-		
+				
 		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
 		
-		Query query = session.createQuery("UPDATE Player p SET p.password = :password WHERE p.name = :name", Player.class);
+		Query query = session.createQuery("UPDATE Player p SET p.password = :password, p.changePassword = :changePassword  WHERE p.name = :name");
 		query.setParameter("password", player.getPassword());
 		query.setParameter("name", player.getName());
+		query.setParameter("changePassword", player.isChangePassword());
 		query.executeUpdate();
-		success = true;
+		boolean success = true;
 		
 		
 		transaction.commit();
