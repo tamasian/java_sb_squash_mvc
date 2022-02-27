@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>select game</title>
+</head>
+<body>
+
+	<p>Select the game which result you want to record </p>
+	
+	<table>
+        
+        <th>Game id</th>
+        <th>Game's place</th>
+        <th>Game's date</th>
+        <th>Player 1</th>
+        <th>Player 2</th>
+        
+        <tr th:each="game : ${games}">
+            <td><a th:href="@{/admin/selectgame/{gameid}(gameid=${game.id})}" th:text="${game.id}"></a></td>
+            <td th:text="${game.place.address}"></td>
+            <td th:text="${game.date}"></td>
+            <td th:text="${game.player1.name}"></td>
+            <td th:text="${game.player2.name}"></td>
+        </tr>
+        
+    </table>
+	
+		
+</body>
+</html>

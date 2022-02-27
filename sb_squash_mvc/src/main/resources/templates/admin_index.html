@@ -8,6 +8,9 @@
 
 
 	<p th:text="${regresult}"></p>
+	<p th:text="${error}"></p>
+	<p th:text="${warning}"></p>
+	<p th:text="${resultsettingsesult}"></p>
 
 	<form action="/admin" method="get">
 		<input type="radio" name="function" value="gL"> List of Games </input>
@@ -18,7 +21,7 @@
 		</br>
 		<input type="radio" name="function" value="nG"> Add new Game </input>
 		</br>
-		<input type="radio" name="function" value="gR"> Set result </input>
+		<input type="radio" name="function" value="nR"> Set result </input>
 		</br>
 		</br>
 		<input type="submit">

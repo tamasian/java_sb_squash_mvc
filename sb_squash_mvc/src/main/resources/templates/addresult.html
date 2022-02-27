@@ -6,5 +6,19 @@
 </head>
 <body>
 
+	<form action="/admin/saveresult" method="get">
+	
+		<p>Game id </p><p th:text=${game.id}></p>
+		<p>Player1: </p><p th:text=${game.player1.name}></p>
+		<p>Player1's score: </p>
+        <input type="number" name="player1_score" placeholder="Player1's score" />
+        </br>
+        <p>Player2: </p><p th:text=${game.player2.name}></p>
+        <p>Player2's score: </p>
+        <input type="number" name="player2_score" placeholder="Player2's score" />
+        </br>
+        <input type="submit" />
+    </form>
+
 </body>
 </html>

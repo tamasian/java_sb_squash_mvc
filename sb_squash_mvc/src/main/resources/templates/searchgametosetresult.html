@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>search game</title>
+</head>
+<body>
+
+	<p>Search the game which result you want to record </p>
+		
+	<form action="/admin/searchgamebyplayertosetresult" method="get">
+		<select name="PlayerName">
+			<option value=""></option>
+			<option th:each="player : ${players}" th:text="${player.name}" /></option>
+		</select>
+		<input type="submit" />	
+	</form>
+	
+	</br>
+	
+	<form action="/admin/searchgamebyplacetosetresult" method="get">
+		<select name="PlaceName">
+			<option value=""></option>
+			<option th:each="place : ${places}" th:text="${place.name}" /></option>
+		</select>
+		<input type="submit" />	
+	</form>
+	
+	</br>
+	
+	
+
+</body>
+</html>

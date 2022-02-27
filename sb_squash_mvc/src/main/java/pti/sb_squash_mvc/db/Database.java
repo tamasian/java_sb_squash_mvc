@@ -57,6 +57,7 @@ private SessionFactory sessionFactory;
 	}
 	
 	
+	
 	public boolean saveNewPassword(Player player) {
 		
 				
@@ -161,6 +162,53 @@ private SessionFactory sessionFactory;
 		return places;
 	}
 	
+	public Player getPlayerByName(String name) {
+		
+		Player player = null;		
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		
+		
+		Query query = session.createQuery("SELECT p FROM Player p WHERE p.name = :name", Player.class);
+		query.setParameter("name", name);
+		List<Player> players = query.getResultList();
+		
+		if(players.isEmpty() == false) {
+			
+			player = players.get(0);
+		}
+		
+		
+		transaction.commit();
+		session.close();
+		
+		return player;
+	}
+	
+	public Place getPlaceByName(String name) {
+		
+		Place place = null;		
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		
+		
+		Query query = session.createQuery("SELECT p FROM Place p WHERE p.name = :name", Place.class);
+		query.setParameter("name", name);
+		List<Place> places = query.getResultList();
+		
+		if(places.isEmpty() == false) {
+			
+			place = places.get(0);
+		}
+		
+		
+		transaction.commit();
+		session.close();
+		
+		return place;
+	}
+	
+	
 	
 	public boolean playerExistsWithName(String name) {
 		
@@ -229,6 +277,40 @@ private SessionFactory sessionFactory;
 		
 		transaction.commit();
 		session.close();	
+	}
+	
+	
+	public void saveGame(Game game) {
+
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		
+		session.save(game);
+		
+		
+		transaction.commit();
+		session.close();	
+	}
+	
+	public void saveResults(Game game) {
+
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		
+		Query query = session.createQuery("UPDATE Game g SET "
+				+ "g.player1_score = :player1_score,  "
+				+ "g.player2_score = :player2_score,  "
+				+ "g.winner = :winner  "
+				+ "WHERE g.id = :id");
+		query.setParameter("player1_score", game.getPlayer1_score());
+		query.setParameter("player2_score", game.getPlayer2_score());
+		query.setParameter("player2_score", game.getPlayer2_score());
+		query.setParameter("winner", game.getWinner());
+		query.setParameter("id", game.getId());
+		query.executeUpdate();		
+		
+		transaction.commit();
+		session.close();
 	}
 	
 		

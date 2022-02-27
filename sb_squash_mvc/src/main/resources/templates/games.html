@@ -11,11 +11,12 @@
 
 	<p>Search by player </p>
 	
-	<form action="/searchbyplayer" method="get">
+	<form action="/searchgamebyplayer" method="get">
 		<select name="PlayerName">
 			<option value=""></option>
-			<option th:each="player : ${players}" th:text="${player}" /></option>
-		</select>	
+			<option th:each="player : ${players}" th:text="${player.name}" /></option>
+		</select>
+		<input type="submit" />	
 	</form>
 	
 	</br>
@@ -24,11 +25,12 @@
 	
 	<p>Search by place </p>
 	
-	<form action="/searchbyplace" method="get">
+	<form action="/searchgamebyplace" method="get">
 		<select name="PlaceName">
 			<option value=""></option>
-			<option th:each="place : ${places}" th:text="${place}" /></option>
-		</select>	
+			<option th:each="place : ${places}" th:text="${place.name}" /></option>
+		</select>
+		<input type="submit" />	
 	</form>
 	
 	</br>
@@ -38,25 +40,34 @@
 
 	<table>
     <tr>
-        <th>Game id</th>
         <th>Game's date</th>
-        <th>Place's name</th>
-        <th>Place's address</th>
-        <th>Place's rental fee HUF</th>
-        <th>Place's rental fee EUR</th>
-        <th>Player1's name</th>
-        <th>Player2's name</th>       
+        <th>Place</th>
+        <th>Address</th>
+        <th>Rental fee HUF</th>
+        <th>Rental fee EUR</th>
+        <th>Player1</th>
+        <th>Player2</th>       
         <th>Player1's score</th>
         <th>Player2's score</th>
-        <th>Winner's name</th>
-        
-    </tr>
-    <tr th:each="game : ${gameList}">
-    	<td th:number="${game.id}"></td>
-        <td th:text="${game.date}"></td> - formázás!
-        ...
+        <th>Winner</th>
+    </tr>   
+    <tr th:each="game : ${games}">
+        <td th:text="${#dates.format(game.date, 'yyyy.MM.dd HH:mm')}"></td>
+        <td th:text="${game.place.name}"></td>
+        <td th:text="${game.place.address}"></td>
+        <td th:text="${#numbers.formatInteger(game.place.rental_fee_HUF,3)}"></td>
+        <td th:text="${#numbers.formatInteger(game.place.rental_fee_EUR,3)}"></td>
+        <td th:text="${game.player1.name}"></td>
+        <td th:text="${game.player2.name}"></td>
+        <td th:text="${game.player1_score} ? ${game.player1_score}: ''"> </td>
+        <td th:text="${game.player2_score} ? ${game.player2_score}: ''"> </td>
+        <td th:if="${game.winner != null}" th:text="${game.winner.name}"></td>
     </tr>
 	</table>
+    
+    
+
+    
 
 </body>
 </html>

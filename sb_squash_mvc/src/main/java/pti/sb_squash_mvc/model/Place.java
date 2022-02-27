@@ -20,14 +20,18 @@ public class Place {
 	private String address;
 	
 	@Column(name = "rental_fee_HUF_hour")
-	private double rental_fee_HUF;
+	private int rental_fee_HUF;
 	
 	@Transient
 	private double rental_fee_EUR;
 		
 	
+	
+	public Place() {
+		super();
+	}
 
-	public Place(String name, String address, double rental_fee_HUF) {
+	public Place(String name, String address, int rental_fee_HUF) {
 		super();
 		this.name = name;
 		this.address = address;
@@ -54,7 +58,7 @@ public class Place {
 		return rental_fee_HUF;
 	}
 
-	public void setRental_fee_HUF(double rental_fee_HUF) {
+	public void setRental_fee_HUF(int rental_fee_HUF) {
 		this.rental_fee_HUF = rental_fee_HUF;
 	}
 

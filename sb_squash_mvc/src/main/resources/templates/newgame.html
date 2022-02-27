@@ -6,5 +6,27 @@
 </head>
 <body>
 
+	<p th:text="${regresult}"></p>
+	
+	<p>Registration Form</p>
+    <form action="/admin/addnewgame" method="get">
+        <select name="player1">
+			<option value=""></option>
+			<option th:each="player : ${players}" th:text="${player.name}"  /></option>
+		</select>
+        <select name="player2">
+			<option value=""></option>
+			<option th:each="player : ${players}" th:text="${player.name}" /></option>
+		</select>
+        <select name="place">
+			<option value=""></option>
+			<option th:each="place : ${places}" th:text="${place.name}" /></option>
+		</select>
+        <input type="datetime-local" name="date" placeholder="Game's date" />
+        </br>        
+        <input type="submit" />
+    </form>
+	
+
 </body>
 </html>
