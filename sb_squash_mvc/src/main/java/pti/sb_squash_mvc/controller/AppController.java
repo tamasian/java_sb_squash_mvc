@@ -1,7 +1,12 @@
 package pti.sb_squash_mvc.controller;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
@@ -16,6 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
 
 import pti.sb_squash_mvc.db.Database;
 import pti.sb_squash_mvc.model.Game;
@@ -69,6 +75,16 @@ public class AppController {
 				}
 				else {
 					
+					ArrayList<Game> orderedGamesList = getGameList();
+					model.addAttribute("games", orderedGamesList);
+					
+					ArrayList<Player> playerList = getPlayerList();
+					model.addAttribute("players", playerList);
+					
+					
+					ArrayList<Place> placeList = getPlaceList();
+					model.addAttribute("places", placeList);
+					
 					targetPage = "games.html";	
 				}		
 			}
@@ -111,6 +127,17 @@ public class AppController {
 			db.close();
 			
 			success = "Password has changed succesfully";
+			
+			ArrayList<Game> orderedGamesList = getGameList();
+			model.addAttribute("games", orderedGamesList);
+			
+			ArrayList<Player> playerList = getPlayerList();
+			model.addAttribute("players", playerList);
+			
+			
+			ArrayList<Place> placeList = getPlaceList();
+			model.addAttribute("places", placeList);
+			
 			targetPage = "games.html"; 
 			
 		}
@@ -413,7 +440,7 @@ public class AppController {
 		Player pl2 = db.getPlayerByName(player2);
 		Place place = db.getPlaceByName(address);
 		
-		
+				
 		Game game = new Game(pl1, pl2, place, d );
 		
 		db.saveGame(game);
@@ -444,10 +471,10 @@ public class AppController {
 		int origSize = games.size();
 		Game game = null;
 		
-		
 		for(int l = 0; l < origSize; l++) {
 			
 			game = games.get(0);
+			
 			
 			for(int m = 1; m < games.size(); m++) {
 				
@@ -460,7 +487,38 @@ public class AppController {
 					}
 					
 				}
+			
+			//getting EUR rate
+			
+			Date date = game.getDate();
+			DateFormat dateString = new SimpleDateFormat("yyyyMMdd");  
+        			
+			Place place = game.getPlace();
+			
+			
+			
+			Instant now = ZonedDateTime.now().toInstant();
+			Instant gameTime = date.toInstant();
+			
+			if(gameTime.isBefore(now) == true) {
 				
+				RestTemplate rt = new RestTemplate();
+				double exr = rt.getForObject("http://localhost:8081/sq?date=" + dateString.format(date), Double.class);
+				
+				double rfEUR = place.getRental_fee_HUF() / exr ;
+				place.setRental_fee_EUR( rfEUR );
+				
+				System.out.println("exr: " + exr);
+				System.out.println("rfEUR: " + rfEUR);
+				
+			}
+			else {
+				
+				place.setRental_fee_EUR( 0 );
+			}
+			
+			
+			
 			orderedGamesList.add(game);
 			games.remove(game);			
 			}
@@ -800,5 +858,6 @@ public class AppController {
 		model.addAttribute("resultsettingsesult", result);
 		return "admin_index.html"; 
 	}
+	
 		
 }

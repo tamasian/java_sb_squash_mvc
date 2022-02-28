@@ -55,8 +55,8 @@
         <td th:text="${#dates.format(game.date, 'yyyy.MM.dd HH:mm')}"></td>
         <td th:text="${game.place.name}"></td>
         <td th:text="${game.place.address}"></td>
-        <td th:text="${#numbers.formatInteger(game.place.rental_fee_HUF,3)}"></td>
-        <td th:text="${#numbers.formatInteger(game.place.rental_fee_EUR,3)}"></td>
+        <td th:text="${#numbers.formatInteger(game.place.rental_fee_HUF, 3, 'WHITESPACE')}"></td>
+        <td th:text="${#numbers.formatDecimal(game.place.rental_fee_EUR, 2, 2 ) }"></td>
         <td th:text="${game.player1.name}"></td>
         <td th:text="${game.player2.name}"></td>
         <td th:text="${game.player1_score} ? ${game.player1_score}: ''"> </td>
